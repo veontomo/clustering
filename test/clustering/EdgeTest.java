@@ -255,4 +255,35 @@ public class EdgeTest {
         assertEquals(true, e1.equals(e1));
     }
 
+    @Test
+    public void testCompareToLess()
+    {
+        System.out.println("return -1 if edge cost is less than that of the argument.");
+        Edge e1 = new Edge(1, 3, 5);
+        assertTrue(-1 == e1.compareTo(new Edge(2, 4, 10)));
+    }
+
+    
+    @Test
+    public void testCompareToEqual() {
+        System.out.println("return 0 if edges have the same cost.");
+        Edge e1 = new Edge(1, 3, 5);
+        assertTrue(0 == e1.compareTo(new Edge(2, 4, 5)));
+    }
+
+    @Test
+    public void testCompareToSame() {
+        System.out.println("return 0 if edges are the same.");
+        Edge e1 = new Edge(1, 3, 5);
+        assertTrue(0 == e1.compareTo(e1));
+    }
+
+    @Test
+    public void testCompareToGreater() {
+        System.out.println("return 1 if edge cost is greater than that of the argument.");
+        Edge e1 = new Edge(3, 2, 5);
+        assertTrue(1 == e1.compareTo(new Edge(2, 4, 1)));
+    }
+
+    
 }

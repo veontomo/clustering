@@ -10,7 +10,7 @@ package clustering;
  *
  * @author Andrea
  */
-public class Edge {
+public class Edge implements Comparable<Edge>{
     /**
      * Number of first end. It is supposed that _end1 is less that _end2.
      */
@@ -116,6 +116,24 @@ public class Edge {
     public boolean equals(Edge e)
     {
         return this._end1 == e.firstEnd() && this._end2 == e.secondEnd() && this._cost == e.cost();
+    }
+
+    /**
+     * Returns -1, if current edge has less cost than that of the argument, 0 if
+     * they are equal, +1 if it is greater.
+     * @param e
+     * @return -1, 0, 1
+     */
+    @Override
+    public int compareTo(Edge e) {
+        int diff = this._cost - e.cost();
+        if (diff > 0){
+            return 1;
+        }
+        if (diff < 0){
+            return -1;
+        }
+        return 0;
     }
 
 
