@@ -25,10 +25,7 @@ public class Graph {
      */
     private List<Integer> _nodes;
     
-    /**
-     * Number of nodes in the graph
-     */
-    private int _numOfNodes;
+ 
 
     public List<Edge> getEdges() {
         return _edges;
@@ -39,23 +36,18 @@ public class Graph {
     }
 
     public int getNumOfNodes() {
-        return _numOfNodes;
+        return this._nodes.size();
     }
 
     public int getNumOfEdges() {
-        return _numOfEdges;
+        return this._edges.size();
     }
     
-    /**
-     * Number of edges in the graph
-     */
-    private int _numOfEdges;
+ 
 
     public Graph() {
         this._edges = new ArrayList();
         this._nodes = new ArrayList();
-        this._numOfNodes = 0;
-        this._numOfEdges = 0;
     }
     
     /**
@@ -75,7 +67,6 @@ public class Graph {
     
     /**
      * If the node does not exist among _nodes, then inserts it into _nodes
- and augments _numOfNodes.
      * @param  n 
      * @return void
      */
@@ -83,21 +74,48 @@ public class Graph {
     {
         if (!this._nodes.contains(n)){
             this._nodes.add(n);
-            this._numOfNodes++;
         }
     }
     
     /**
-     * Insert edge into _edges preserving its order and augments the _numOfEdges 
+     * Insert edge into _edges preserving its order
      * @param e 
      */
     private void _insertEdge(Edge e)
     {
-       if (this._numOfEdges == 0){
+        if (this.getNumOfEdges() == 0){
            this._edges.add(e);
-           this._numOfEdges++;
-       }
-       
+           return;
+        }
+        if (this.getNumOfEdges() == 1){
+            int compare = this.getEdge(0).compareTo(e);
+            if (compare < 0){
+                this._edges.add(e);
+            } else {
+                this._edges.add(0, e);
+            }
+            return;
+        }
+        int l = 0;
+        int r = this._edges.size() - 1;
+        int m = 0;
+        Edge em;
+        int comp;
+        while(l != r ){
+            m = (l + r)/2;
+            em = this.getEdge(m);
+            comp = em.compareTo(e);
+            if (comp > 0){
+                r = m;
+            } else if (comp < 0){
+                l = m;
+            } else {
+                break;
+            }
+        }
+        this._edges.add(m, e);
+        
+        
     }
     
     /**
