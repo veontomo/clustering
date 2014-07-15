@@ -101,7 +101,8 @@ public class Graph {
         int m = 0;
         Edge em;
         int comp;
-        while(l != r ){
+        while(r - l > 1 ){
+            System.out.println("l = " + l + ", r = " + r );
             m = (l + r)/2;
             em = this.getEdge(m);
             comp = em.compareTo(e);
