@@ -107,6 +107,16 @@ public class Edge {
             return this._end1 == end1 && this._end2 == end2;
         }
     }
+    
+    /**
+     * Returns true if two edges have all parameters equal and false otherwise.
+     * @param e
+     * @return  boolean
+     */
+    public boolean equals(Edge e)
+    {
+        return this._end1 == e.firstEnd() && this._end2 == e.secondEnd() && this._cost == e.cost();
+    }
 
 
 }

@@ -28,7 +28,7 @@ public class Graph {
     /**
      * Number of nodes in the graph
      */
-    private int _numberOfNodes;
+    private int _numOfNodes;
 
     public List<Edge> getEdges() {
         return _edges;
@@ -38,8 +38,8 @@ public class Graph {
         return _nodes;
     }
 
-    public int getNumberOfNodes() {
-        return _numberOfNodes;
+    public int getNumOfNodes() {
+        return _numOfNodes;
     }
 
     public int getNumOfEdges() {
@@ -54,7 +54,7 @@ public class Graph {
     public Graph() {
         this._edges = new ArrayList();
         this._nodes = new ArrayList();
-        this._numberOfNodes = 0;
+        this._numOfNodes = 0;
         this._numOfEdges = 0;
     }
     
@@ -75,7 +75,7 @@ public class Graph {
     
     /**
      * If the node does not exist among _nodes, then inserts it into _nodes
-     * and augments _numberOfNodes.
+ and augments _numOfNodes.
      * @param  n 
      * @return void
      */
@@ -83,7 +83,7 @@ public class Graph {
     {
         if (!this._nodes.contains(n)){
             this._nodes.add(n);
-            this._numberOfNodes++;
+            this._numOfNodes++;
         }
     }
     
@@ -93,7 +93,10 @@ public class Graph {
      */
     private void _insertEdge(Edge e)
     {
-        //!!! stub
+       if (this._numOfEdges == 0){
+           this._edges.add(e);
+           this._numOfEdges++;
+       }
     }
     
     /**
