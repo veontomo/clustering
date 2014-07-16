@@ -167,7 +167,7 @@ public class GraphTest {
 
     
     @Test
-    public void testAddExpesiveEdgeToOneEdgeGraph() {
+    public void testAddExpensiveEdgeToOneEdgeGraph() {
         System.out.println("adding more expensive edge to one-edge graph");
         Graph g = new Graph();
         Edge e1 = new Edge(1, 4, 4);
@@ -176,8 +176,97 @@ public class GraphTest {
         g.addEdge(e2);
         Edge b1 = g.getEdge(0);
         Edge b2 = g.getEdge(1);
-        assertEquals(true, b1.equals(e1));
-        assertEquals(true, b2.equals(e2));
+        assertTrue(b1.equals(e1));
+        assertTrue(b2.equals(e2));
     }
+    
+    @Test
+    public void testAddEdge3IncreasingOrder() {
+        System.out.println("adding three edges in increasing order.");
+        Graph g = new Graph();
+        Edge e1 = new Edge(1, 4, 2);
+        Edge e2 = new Edge(3, 2, 5);
+        Edge e3 = new Edge(1, 2, 6);
+        g.addEdge(e1);
+        g.addEdge(e2);
+        g.addEdge(e3);
+        assertTrue(g.getEdge(0).equals(e1));
+        assertTrue(g.getEdge(1).equals(e2));
+        assertTrue(g.getEdge(2).equals(e3));
+    }
+    
+    @Test
+    public void testAddEdge3DecreasingOrder() {
+        System.out.println("adding three edges in increasing order.");
+        Graph g = new Graph();
+        Edge e1 = new Edge(1, 4, 6);
+        Edge e2 = new Edge(3, 2, 5);
+        Edge e3 = new Edge(1, 2, 4);
+        g.addEdge(e1);
+        g.addEdge(e2);
+        g.addEdge(e3);
+        assertTrue(g.getEdge(0).equals(e3));
+        assertTrue(g.getEdge(1).equals(e2));
+        assertTrue(g.getEdge(2).equals(e1));
+    }
+    
+    @Test
+    public void testAddEdge3MixedOrder() {
+        System.out.println("adding three edges in increasing order.");
+        Graph g = new Graph();
+        Edge e1 = new Edge(1, 4, 2);
+        Edge e2 = new Edge(3, 2, 6);
+        Edge e3 = new Edge(1, 2, 5);
+        g.addEdge(e1);
+        g.addEdge(e2);
+        g.addEdge(e3);
+        System.out.println(g.toString());
+        assertTrue(g.getEdge(0).equals(e1));
+        assertTrue(g.getEdge(1).equals(e3));
+        assertTrue(g.getEdge(2).equals(e2));
+    }
+    
+    @Test
+    public void testAddEdge6MixedOrder() {
+        System.out.println("adding three edges in increasing order.");
+        Graph g = new Graph();
+        Edge e1 = new Edge(1, 4, 7);
+        Edge e2 = new Edge(3, 2, 5);
+        Edge e3 = new Edge(1, 2, 1);
+        Edge e4 = new Edge(3, 4, 4);
+        Edge e5 = new Edge(4, 2, 2);
+        Edge e6 = new Edge(2, 5, 3);
+        g.addEdge(e1);
+        g.addEdge(e2);
+        g.addEdge(e3);
+        g.addEdge(e4);
+        g.addEdge(e5);
+        g.addEdge(e6);
+        assertTrue(g.getEdge(0).equals(e3));
+        assertTrue(g.getEdge(1).equals(e5));
+        assertTrue(g.getEdge(2).equals(e6));
+        assertTrue(g.getEdge(3).equals(e4));
+        assertTrue(g.getEdge(4).equals(e2));
+        assertTrue(g.getEdge(5).equals(e1));
+    }
+    
+    @Test
+    public void testAddEdge4TheSameCost() {
+        System.out.println("adding four edges of the same cost.");
+        Graph g = new Graph();
+        Edge e1 = new Edge(1, 4, 7);
+        Edge e2 = new Edge(3, 2, 7);
+        Edge e3 = new Edge(1, 2, 7);
+        Edge e4 = new Edge(3, 4, 7);
+        g.addEdge(e1);
+        g.addEdge(e2);
+        g.addEdge(e3);
+        g.addEdge(e4);
+        assertTrue(g.getNumOfEdges() == 4);
+    }
+    
+
+
+
 
 }

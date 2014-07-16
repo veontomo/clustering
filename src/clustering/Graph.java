@@ -83,27 +83,31 @@ public class Graph {
      */
     private void _insertEdge(Edge e)
     {
+        System.out.println("Graph content: " + this.toString());
         if (this.getNumOfEdges() == 0){
+           System.out.println("Graph has no edges, so let's just add the edge " + e.toString());
            this._edges.add(e);
            return;
         }
-        if (this.getNumOfEdges() == 1){
-            int compare = this.getEdge(0).compareTo(e);
-            if (compare < 0){
+        if (this.getNumOfEdges() == 1) {
+            System.out.println("Graph has one edges");
+            if (e.compareTo(this.getEdge(0)) > 0){
+                System.out.println("Appending edge " + e.toString() + " to the end.");
                 this._edges.add(e);
             } else {
+                System.out.println("Inserting edge " + e.toString() + " to the beginning.");
                 this._edges.add(0, e);
             }
             return;
         }
-        int l = 0;
-        int r = this._edges.size() - 1;
-        int m = 0;
+        int l = 0, pos,
+            r = this._edges.size() - 1,
+            m, comp, counter = 0;
         Edge em;
-        int comp;
-        while(r - l > 1 ){
-            System.out.println("l = " + l + ", r = " + r );
-            m = (l + r)/2;
+        while(r - l > 1){
+            m = (l + r) / 2;
+            System.out.println("counter: " + counter + ": l = " + l + ", r = " + r + ", m = " + m);
+            counter++;
             em = this.getEdge(m);
             comp = em.compareTo(e);
             if (comp > 0){
@@ -111,12 +115,20 @@ public class Graph {
             } else if (comp < 0){
                 l = m;
             } else {
+                l = m;
+                r = m;
+                System.out.println("exiting while loop");
                 break;
             }
         }
-        this._edges.add(m, e);
-        
-        
+        if (r == l || r == l + 1) {
+            pos = (e.compareTo(this.getEdge(l)) < 0) ? l : ((e.compareTo(this.getEdge(r)) > 0) ? r + 1 : r );
+            this._edges.add(pos, e);
+        } else {
+            throw new IllegalArgumentException("Somehow left and rigth pointers "
+                    + "have unexpected values: l=" + l + ", r=" + r + 
+                    "\nGraph: " + this.toString() );
+        }
     }
     
     /**
@@ -130,6 +142,14 @@ public class Graph {
         return _edges.get(n);
     }
     
+    public String toString()
+    {
+        String output = "";
+        for(Edge e : this._edges){
+            output += e.toString() + " ";
+        }
+        return output;
+    }
     
 
     
