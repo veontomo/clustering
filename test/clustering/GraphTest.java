@@ -52,6 +52,17 @@ public class GraphTest {
         assertEquals(true, e2.equals(e));
     }
     
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddEdgeIfExists()
+    {
+        System.out.println("throws exception if edge already exists.");
+        Graph g = new Graph();
+        Edge e = new Edge(1, 2, 5);
+        Edge e2 = new Edge(1, 2, 3);
+        g.addEdge(e);
+        g.addEdge(e2);
+    }
+    
     /**
      * Test of getEdges method, of class Graph.
      */
@@ -264,7 +275,43 @@ public class GraphTest {
         g.addEdge(e4);
         assertTrue(g.getNumOfEdges() == 4);
     }
-    
+
+    /**
+     * Test of edgeExists method, of class Graph.
+     */
+    @Test
+    public void testConnectedByEdgeFalseInEmptyGraph() {
+        System.out.println("returns false if graph is empty");
+        Edge e = new Edge(1, 2, 3);
+        Graph g = new Graph();
+        assertFalse(g.connectedByEdge(1, 2));
+    }
+
+    @Test
+    public void testConnectedByEdgeNotConnected() {
+        System.out.println("returns false if nodes are not connected directly");
+        Edge e1 = new Edge(1, 2, 3);
+        Edge e2 = new Edge(1, 5, 4);
+        Graph g = new Graph();
+        g.addEdge(e1);
+        g.addEdge(e2);
+        assertFalse(g.connectedByEdge(2, 5));
+        assertFalse(g.connectedByEdge(5, 2));
+    }
+  
+
+    @Test
+    public void testConnectedByEdgeConnected() {
+        System.out.println("returns false if nodes are not connected directly");
+        Edge e1 = new Edge(1, 2, 3);
+        Edge e2 = new Edge(1, 5, 4);
+        Graph g = new Graph();
+        g.addEdge(e1);
+        g.addEdge(e2);
+        assertTrue(g.connectedByEdge(2, 1));
+        assertTrue(g.connectedByEdge(1, 2));
+    }
+
 
 
 

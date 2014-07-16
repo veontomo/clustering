@@ -58,6 +58,9 @@ public class Graph {
      */
     public void addEdge(Edge e)
     {
+        if (this.connectedByEdge(e.firstEnd(), e.secondEnd())){
+            throw new IllegalArgumentException("Nodes are already connected.");
+        }
         int end1 = e.firstEnd();
         int end2 = e.secondEnd();
         this._registerNode(end1);
@@ -149,6 +152,26 @@ public class Graph {
             output += e.toString() + " ";
         }
         return output;
+    }
+    
+    /**
+     * Returns true if nodes n1 and n2 are connected by an edge.
+     * @param n1
+     * @param n2
+     * @return boolean
+     */
+    public boolean connectedByEdge(int n1, int n2)
+    {
+        // first see if the nodes are present in the node list
+        if (!this._nodes.contains(n1) || !this._nodes.contains(n2)){
+            return false;
+        }
+        for (Edge e : this.getEdges()){
+            if (e.connects(n1, n2)){
+                return true;
+            }
+        }
+        return false;
     }
     
 
