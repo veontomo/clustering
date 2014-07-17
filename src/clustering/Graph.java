@@ -222,6 +222,15 @@ public class Graph {
         this.initializeClusters();
         if (n >= this.getNumOfNodes()){
             this._spacing = this._edges.get(0).cost();
+            return;
+        }
+        int clusterNum = this.getNumOfNodes();
+        int counter = 0;
+        Edge e;
+        while (clusterNum > n){
+            e = this.getEdge(counter);
+            this.getClusters().union(e.firstEnd(), e.secondEnd());
+            clusterNum = this.getNumOfClusters();
         }
     
     }
