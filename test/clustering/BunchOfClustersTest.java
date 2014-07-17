@@ -50,60 +50,125 @@ public class BunchOfClustersTest {
 
         c3.insert(7);
         c3.insert(9);
+        
+        b = new BunchOfClusters();
     }
     
     @After
     public void tearDown() {
     }
 
+    @Test(expected=IllegalArgumentException.class)
+    public void testInsertEmptyCluster()
+    {
+        System.out.println("throws exception when inserting empty cluster.");
+        b.insert(new Cluster());
+    }
+    
+
+    @Test
+    public void testSizeOfEmpty() 
+    {
+        System.out.println("returns 0 for the size of empty bunch.");
+        assertTrue(b.size() == 0);
+    }
+
+    @Test
+    public void testSizeOneElem() 
+    {
+        System.out.println("returns 1 for the size of bunch with single cluster.");
+        b.insert(c1);
+        assertTrue(b.size() == 1);
+    }
+
+    @Test
+    public void testSizeThreeElem() 
+    {
+        System.out.println("returns 0 for the size of empty bunch");
+        b.insert(c1);
+        b.insert(c2);
+        b.insert(c3);
+        assertTrue(b.size() == 3);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testInsertClusterIsAlreadyPresent()
+    {
+        System.out.println("throws exception if the bunch already contains "
+                + "cluster with that leader");
+        b.insert(c1);
+        b.insert(c1);
+    }
+    
     /**
-     * Test of getCluster method, of class BunchOfClusters.
+     * Test of getClusterByLeader method, of class BunchOfClusters.
      */
     @Test
     public void testGetClusterNotExist() {
         System.out.println("get cluster that is not present");
-        assertTrue(b.getCluster(1) == null);
+        assertTrue(b.getClusterByLeader(1) == null);
     }
     
     /**
-     * Test of getCluster method, of class BunchOfClusters.
+     * Test of getClusterByLeader method, of class BunchOfClusters.
      */
     @Test
     public void testGetClusterSingleCluster() {
         System.out.println("get cluster from the bunch that contains just one cluster.");
         b.insert(c1);
-        assertTrue(c1.getLeader() == 1);
-        Cluster c = b.getCluster(1);
-        assertTrue(b.getCluster(1) == null);
+        assertTrue(b.getClusterByLeader(1).isEqualTo(c1));
     }
+    
+    /**
+     * Test of getClusterByLeader method, of class BunchOfClusters.
+     */
+    @Test
+    public void testGetClusterThreeClusters() {
+        System.out.println("get cluster from the bunch that contains three cluster.");
+        b.insert(c1);
+        b.insert(c3);
+        b.insert(c2);
+        assertTrue(b.getClusterByLeader(7).isEqualTo(c3));
+    }
+
 
     /**
      * Test of find method, of class BunchOfClusters.
      */
     @Test
     public void testFind() {
-        System.out.println("find");
-        int n = 0;
-        BunchOfClusters instance = new BunchOfClusters();
-        Integer expResult = null;
-        Integer result = instance.find(n);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("Returns leader of cluster which the element belongs to.");
+        b.insert(c1);
+        b.insert(c3);
+        b.insert(c2);
+        assertTrue(b.find(2) == 0);
     }
+    
+    /**
+     * Test of find method, of class BunchOfClusters.
+     */
+    @Test
+    public void testFindNotExist() {
+        System.out.println("Returns leader of cluster which the element belongs to.");
+        b.insert(c1);
+        b.insert(c3);
+        b.insert(c2);
+        assertTrue(b.find(20) == null);
+    }
+
 
     /**
      * Test of union method, of class BunchOfClusters.
      */
-    @Test
-    public void testUnion() {
-        System.out.println("union");
-        int n1 = 0;
-        int n2 = 0;
-        BunchOfClusters instance = new BunchOfClusters();
-        instance.union(n1, n2);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+//    @Test
+//    public void testUnion() {
+//        System.out.println("union");
+//        int n1 = 0;
+//        int n2 = 0;
+//        BunchOfClusters instance = new BunchOfClusters();
+//        instance.union(n1, n2);
+//        // TODO review the generated test code and remove the default call to fail.
+////        fail("The test case is a prototype.");
+//    }
     
 }

@@ -7,6 +7,7 @@
 package clustering;
 
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  *
@@ -19,15 +20,38 @@ public class BunchOfClusters {
      */
     private HashMap<Integer, Cluster> _clusters;
     
+    
+    /**
+     * Number of elements in _clusters
+     */
+    private int _size;
+    
     /**
      * Returns the cluster which leader is n
      * @param n
      * @return Cluster
      */
-    public Cluster getCluster(int n)
+    public Cluster getClusterByLeader(int n)
     {
-        /// !!!stub
-        return new Cluster();
+        if (this._clusters.containsKey(n)){
+            return this._clusters.get(n);
+        }
+        return null;
+    }
+
+    /**
+     * _size getter
+     * @return int
+     */
+    public int size()
+    {
+        return _size;
+    }
+    
+    public BunchOfClusters()
+    {
+        this._clusters = new HashMap();
+        this._size = 0;
     }
     
     /**
@@ -37,7 +61,17 @@ public class BunchOfClusters {
      */
     public Integer find(int n)
     {
-        return 1;
+        Set<Integer> leaders = this._clusters.keySet();
+        // if requested node is among leaders, return it 
+        if (leaders.contains(n)){
+            return n;
+        }
+        for (Integer i : leaders){
+            if (this._clusters.get(i).contains(n)){
+                return i;
+            }
+        }
+        return null;
     }
     
     /**
@@ -52,7 +86,16 @@ public class BunchOfClusters {
     
     public void insert(Cluster c)
     {
-        /// !!!stub
+        if (c.size() == 0){
+            throw new IllegalArgumentException("Can not insert empty cluster!");
+        }
+        int leader = c.getLeader();
+        if (this._clusters.containsKey(leader)){
+            throw new IllegalArgumentException("Cluster with given leader (" + 
+                    leader + ") is already present!");
+        }
+        this._clusters.put(leader, c);
+        this._size++;
     }
     
 }
