@@ -227,7 +227,107 @@ public class ClusterTest {
         assertTrue(c1.getElem(3) == 6);
         assertTrue(c1.getElem(4) == 4);
     }
+    
+    
+    @Test
+    public void testIsEqualToIfEmpty()
+    {
+        System.out.println("Returns true if both clusters are empty");
+        Cluster c1 = new Cluster(),
+                c2 = new Cluster();
+        assertTrue(c1.isEqualTo(c2));
+    }
+    
+    
+    @Test
+    public void testIsEqualToIftargetIsEmpty() {
+        System.out.println("Returns false if target is empty and argument is not.");
+        Cluster c1 = new Cluster(),
+                c2 = new Cluster();
+        c2.insert(5);
+        c2.insert(4);
+        assertFalse(c1.isEqualTo(c2));
+    }
+    
+    @Test
+    public void testIsEqualToIfArgumentIsEmpty() {
+        System.out.println("Returns false if argument is empty and target is not.");
+        Cluster c1 = new Cluster(),
+                c2 = new Cluster();
+        c1.insert(2);
+        c1.insert(4);
+        assertFalse(c1.isEqualTo(c2));
+    }
 
+    @Test
+    public void testIsEqualSameSize() {
+        System.out.println("Returns false if clusters have equal size but different content.");
+        Cluster c1 = new Cluster(),
+                c2 = new Cluster();
+        c1.insert(5);
+        c1.insert(4);
+        c1.insert(3);
+
+        c2.insert(6);
+        c2.insert(5);
+        c2.insert(2);
+        assertFalse(c1.isEqualTo(c2));
+    }
+
+
+    @Test
+    public void testIsEqualSameContentDiffLeaders() {
+        System.out.println("Returns false if clusters have same content but leaders are different.");
+        Cluster c1 = new Cluster(),
+                c2 = new Cluster();
+        c1.insert(5);
+        c1.insert(4);
+        c1.insert(3);
+
+        c2.insert(3);
+        c2.insert(5);
+        c2.insert(4);
+        assertFalse(c1.isEqualTo(c2));
+    }
 
     
+    @Test
+    public void testIsEqualIdentical() {
+        System.out.println("Returns false if clusters have are identical");
+        Cluster c1 = new Cluster(),
+                c2 = new Cluster();
+        c1.insert(5);
+        c1.insert(4);
+        c1.insert(3);
+        c1.insert(-1);
+
+        c2.insert(5);
+        c2.insert(4);
+        c2.insert(3);
+        c2.insert(-1);
+        assertTrue(c1.isEqualTo(c2));
+    }
+
+    @Test
+    public void testIsEqual() {
+        System.out.println("Returns true if clusters have the same content, "
+                + "the same leader, but were created in different ways.");
+        Cluster c1 = new Cluster(),
+                c2 = new Cluster();
+        c1.insert(5);
+        c1.insert(4);
+        c1.insert(3);
+        c1.insert(-1);
+
+        c2.insert(5);
+        c2.insert(-1);
+        c2.insert(3);
+        c2.insert(4);
+
+        assertTrue(c1.isEqualTo(c2));
+    }
+
+    
+    
 }
+

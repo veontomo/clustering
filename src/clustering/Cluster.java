@@ -107,7 +107,31 @@ public class Cluster {
         for (i = 0; i < len; i++){
             this.insert(c.getElem(i));
         }
-        
+    }
+    
+    /**
+     * Return true if the clusters have the same elements and the same leaders(?)
+     * @param c
+     * @return boolean
+     */
+    public boolean isEqualTo(Cluster c)
+    {
+        int len = this.size();
+        if (len != c.size()){
+            return false;
+        }
+        if (len == 0){
+            return true;
+        }
+        if (this.getLeader() != c.getLeader()){
+            return false;
+        }
+        for (Integer n : this._elems){
+            if (!c.contains(n)){
+                return false;
+            }
+        }
+        return true;
     }
     
     
