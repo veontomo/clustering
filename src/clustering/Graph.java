@@ -25,8 +25,18 @@ public class Graph {
      */
     private List<Integer> _nodes;
     
- 
+    /**
+     * clusters
+     */
+    private BunchOfClusters _clusters;
+    
+    /**
+     * spacing - minimal value among all distances between separated clusters
+     */
+    private int _spacing;
 
+  
+    
     public List<Edge> getEdges() {
         return _edges;
     }
@@ -34,6 +44,11 @@ public class Graph {
     public List<Integer> getNodes() {
         return _nodes;
     }
+    
+    public BunchOfClusters getClusters() {
+        return _clusters;
+    }
+
 
     public int getNumOfNodes() {
         return this._nodes.size();
@@ -41,6 +56,15 @@ public class Graph {
 
     public int getNumOfEdges() {
         return this._edges.size();
+    }
+    
+    public int getNumOfClusters(){
+        return this._clusters.size();
+    }
+    
+    
+    public int getSpacing() {
+        return _spacing;
     }
     
  
@@ -174,7 +198,33 @@ public class Graph {
         return false;
     }
     
-
+    /**
+     * Initialize _clusters: creates clusters out of each node 
+     * and inserts it into _clusters.
+     */
+    public void initializeClusters()
+    {
+        this._clusters = new BunchOfClusters();
+        Cluster c;
+        for (int n : this._nodes){
+            c = new Cluster();
+            c.insert(n);
+            this._clusters.insert(c);
+        }
+    }
+    
+    /**
+     * Splits the graph in n parts. It starts merging the nodes until 
+     * the total number of clusters reaches n.
+     * @param n 
+     */
+    public void clusterify(int n){
+        this.initializeClusters();
+        if (n >= this.getNumOfNodes()){
+            this._spacing = this._edges.get(0).cost();
+        }
+    
+    }
     
     public static void main(String[] args)
     {

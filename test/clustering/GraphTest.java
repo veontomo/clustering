@@ -19,7 +19,8 @@ import static org.junit.Assert.*;
  * @author Andrea
  */
 public class GraphTest {
-    
+    public Edge e1, e2, e3, e4, e5, e6;
+    public Graph g;
     public GraphTest() {
     }
     
@@ -33,6 +34,19 @@ public class GraphTest {
     
     @Before
     public void setUp() {
+        e1 = new Edge(1, 2, 3);
+        e2 = new Edge(2, 4, 2);
+        e3 = new Edge(4, 3, 1);
+        e4 = new Edge(3, 1, 2);
+        e5 = new Edge(1, 4, 1);
+        e6 = new Edge(3, 2, 3);
+        g = new Graph();
+        g.addEdge(e1);
+        g.addEdge(e2);
+        g.addEdge(e3);
+        g.addEdge(e4);
+        g.addEdge(e5);
+        g.addEdge(e6);
     }
     
     @After
@@ -311,7 +325,68 @@ public class GraphTest {
         assertTrue(g.connectedByEdge(2, 1));
         assertTrue(g.connectedByEdge(1, 2));
     }
+    
+    @Test 
+    public void testInitializeClusters()
+    {
+        System.out.println("Initialize clusters with exisiting nodes");
+        Edge e1 = new Edge(1, 4, 7);
+        Edge e2 = new Edge(3, 2, 5);
+        Edge e3 = new Edge(1, 2, 1);
+        Edge e4 = new Edge(3, 4, 4);
+        Edge e5 = new Edge(4, 2, 2);
+        Edge e6 = new Edge(2, 5, 3);
+        Graph g = new Graph();
+        g.addEdge(e1);
+        g.addEdge(e2);
+        g.addEdge(e3);
+        g.addEdge(e4);
+        g.addEdge(e5);
+        g.addEdge(e6);
+        g.initializeClusters();
+        BunchOfClusters b = g.getClusters();
+        assertTrue(b.size() == 5);
+    }
+    
+    
+    @Test
+    public void testClusterifyTooDetailed() {
+        System.out.println("It leaves 4-node graph unchanged if asked"
+                + " to split it in 5 clusters.");
+        g.clusterify(5);
+        assertTrue(g.getNumOfClusters() == 4);
+        assertTrue(g.getSpacing() == 1);
+    }
+            
+    @Test
+    public void testClusterifyReady() {
+        System.out.println("It leaves 4-node graph unchanged if asked"
+                + " to split it in 4 clusters.");
+        g.clusterify(4);
+        assertTrue(g.getNumOfClusters() == 4);
+        assertTrue(g.getSpacing() == 1);
+    }
+    
+    @Test
+    public void testClusterifySingleMerge() {
+        System.out.println("It merges the nearest nodes.");
+        g.clusterify(3);
+        assertTrue(g.getNumOfClusters() == 3);
+        assertTrue(g.getSpacing() == 1);
+    }
+    
+    @Test
+    public void testClusterifyMergeTwice() {
+        System.out.println("It merges the two nearest nodes.");
+        g.clusterify(2);
+        assertTrue(g.getNumOfClusters() == 2);
+        assertTrue(g.getSpacing() == 2);
+    }
 
+    
+    
+
+    
 
 
 

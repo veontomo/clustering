@@ -155,6 +155,51 @@ public class BunchOfClustersTest {
         b.insert(c2);
         assertTrue(b.find(20) == null);
     }
+    
+    @Test
+    public void testUnionFromTwoDifferent()
+    {
+        System.out.println("Joins elements of two different clusters.");
+        b.insert(c1);
+        b.insert(c3);
+        b.insert(c2);
+        assertTrue(b.size() == 3);
+        int l = b.union(4, 6);
+        assertTrue(b.size() == 2);
+        assertTrue(b.leaderExists(0));
+        assertTrue(b.leaderExists(7));
+        assertTrue(l == 0);
+        Cluster res = b.getClusterByLeader(0);
+        assertTrue(res.size() == 8);
+        assertTrue(res.getLeader() == 0);
+        // from the first cluster
+        assertTrue(res.contains(1));
+        assertTrue(res.contains(4));
+        assertTrue(res.contains(3));
+        // from the second cluster
+        assertTrue(res.contains(0));
+        assertTrue(res.contains(10));
+        assertTrue(res.contains(2));
+        assertTrue(res.contains(5));
+        assertTrue(res.contains(6));
+        
+        assertTrue(b.getClusterByLeader(7).isEqualTo(c3));
+    }
+    
+    @Test
+    public void testUnionFromTheSame() {
+        System.out.println("Does not change if elements are in the same cluster.");
+        b.insert(c1);
+        b.insert(c2);
+        assertTrue(b.size() == 2);
+        int l = b.union(4, 3);
+        assertTrue(b.size() == 2);
+        assertTrue(l == 1);
+        b.getClusterByLeader(0);
+        assertTrue(b.getClusterByLeader(1).isEqualTo(c1));
+        assertTrue(b.getClusterByLeader(0).isEqualTo(c2));
+
+    }
 
 
     /**

@@ -75,13 +75,35 @@ public class BunchOfClusters {
     }
     
     /**
-     * Unions the cluster to which nodes n1 and n2 belongs to.
+     * Unions the cluster to which nodes n1 and n2 belongs to and returns 
+     * number of the leader of the resulting cluster.
      * @param n1
      * @param n2 
      */
-    public void union(int n1, int  n2)
+    public int union(int n1, int  n2)
     {
-        /// !!!stub
+        Integer l1 = this.find(n1),
+            l2 = this.find(n2);
+        if (l1 == null || l2 == null){
+            throw new IllegalArgumentException("Element(s) is not found! Can not unify!");
+        }
+        if (l1 == l2){
+            return l1;
+        }
+        Cluster c1 = this.getClusterByLeader(l1);
+        Cluster c2 = this.getClusterByLeader(l2);
+        int leader;
+        if (c1.size() > c2.size()){
+            c1.join(c2);
+            leader =  l1;
+            this._clusters.remove(l2);
+        } else {
+            c2.join(c1);
+            leader = l2;
+            this._clusters.remove(l1);
+        }
+        this._size--;
+        return leader;
     }
     
     public void insert(Cluster c)
@@ -96,6 +118,16 @@ public class BunchOfClusters {
         }
         this._clusters.put(leader, c);
         this._size++;
+    }
+    
+    /**
+     * Returns true if there exists cluster with leader n.
+     * @param n
+     * @return  boolean
+     */
+    public boolean leaderExists(int n)
+    {
+        return this._clusters.containsKey(n);
     }
     
 }
