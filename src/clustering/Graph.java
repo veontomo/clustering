@@ -231,6 +231,7 @@ public class Graph {
             e = this.getEdge(counter);
             this.getClusters().union(e.firstEnd(), e.secondEnd());
             clusterNum = this.getNumOfClusters();
+            counter++;
         }
     
     }
