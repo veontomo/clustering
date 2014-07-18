@@ -25,7 +25,7 @@ public class Clustering {
         System.out.println("loading graph");
         BufferedReader br = null;
         Graph g = new Graph();
-        String fileName = "c:\\Users\\Andrea\\Documents\\courses\\algo2\\homework2\\clustering1.txt";
+        String fileName = "c:\\Users\\Andrea\\Documents\\courses\\algo2\\homework2\\clustering_test2.txt";
         try {
             Integer counter = 0;
             Integer first, second, cost;
@@ -63,9 +63,9 @@ public class Clustering {
         }
         System.out.println("Graph is loaded with " + g.getNumOfNodes() + " nodes and " + + g.getNumOfEdges() + " edges.");
 //        System.out.println(g.toString());
-        g.clusterify(200);
+        g.clusterify(1);
         System.out.println("#clusters = " + g.getNumOfClusters());
-//        System.out.println("Clusterized:\n" + g.getClusters().info());
+        System.out.println("Clusterized:\n" + g.getClusters().info());
         System.out.println("spacing: " + g.getSpacing());
 //        System.out.println("Ordering graph");
 //        g.dfsOrder();

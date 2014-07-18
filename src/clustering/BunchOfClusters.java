@@ -82,14 +82,18 @@ public class BunchOfClusters {
      */
     public int union(int n1, int  n2)
     {
-        System.out.print("Joining " + n1 + " and " + n2);
         Integer l1 = this.find(n1),
             l2 = this.find(n2);
-        System.out.print(" Their parents: " + l1 + " and " + l2);
         if (l1 == null || l2 == null){
             throw new IllegalArgumentException("Element(s) is not found! Can not unify!");
         }
+        int mark = 438;
+        if(l1 == mark || l2 == mark || n1 == mark || n2 == mark){
+            System.out.println("!!!!!!!!!!!");
+        }
+        System.out.print(" Joining: " + n1 + "(" + l1 + ") and " + n2 + "(" + l2 + ")");
         if (l1.equals(l2)){
+            System.out.println("\nThe nodes are in the same cluster. No join.");
             return l1;
         }
         Cluster c1 = this.getClusterByLeader(l1);

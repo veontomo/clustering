@@ -259,8 +259,8 @@ public class Graph {
                 this._spacing = 0;
                 return;
             }
-//            System.out.println("Merging on edge #" + counter);
             e = this.getEdge(counter);
+            System.out.println("Merging on edge #" + counter + ": " + e.toString());
             this.getClusters().union(e.firstEnd(), e.secondEnd());
             clusterNum = this.getNumOfClusters();
             counter++;
