@@ -110,19 +110,19 @@ public class Graph {
      */
     private void _insertEdge(Edge e)
     {
-        System.out.println("Graph content: " + this.toString());
+//        System.out.println("Graph content: " + this.toString());
         if (this.getNumOfEdges() == 0){
-           System.out.println("Graph has no edges, so let's just add the edge " + e.toString());
+//           System.out.println("Graph has no edges, so let's just add the edge " + e.toString());
            this._edges.add(e);
            return;
         }
         if (this.getNumOfEdges() == 1) {
-            System.out.println("Graph has one edges");
+//            System.out.println("Graph has one edges");
             if (e.compareTo(this.getEdge(0)) > 0){
-                System.out.println("Appending edge " + e.toString() + " to the end.");
+//                System.out.println("Appending edge " + e.toString() + " to the end.");
                 this._edges.add(e);
             } else {
-                System.out.println("Inserting edge " + e.toString() + " to the beginning.");
+//                System.out.println("Inserting edge " + e.toString() + " to the beginning.");
                 this._edges.add(0, e);
             }
             return;
@@ -133,7 +133,7 @@ public class Graph {
         Edge em;
         while(r - l > 1){
             m = (l + r) / 2;
-            System.out.println("counter: " + counter + ": l = " + l + ", r = " + r + ", m = " + m);
+//            System.out.println("counter: " + counter + ": l = " + l + ", r = " + r + ", m = " + m);
             counter++;
             em = this.getEdge(m);
             comp = em.compareTo(e);
@@ -144,7 +144,7 @@ public class Graph {
             } else {
                 l = m;
                 r = m;
-                System.out.println("exiting while loop");
+//                System.out.println("exiting while loop");
                 break;
             }
         }
@@ -214,6 +214,16 @@ public class Graph {
     }
     
     /**
+     * Returs true if edge nodes are located in different clusters
+     * @param e
+     * @return boolean
+     */
+    public boolean isCut(Edge e)
+    {
+        return this._clusters.find(e.firstEnd()) != this._clusters.find(e.secondEnd());
+    }
+    
+    /**
      * Splits the graph in n parts. It starts merging the nodes until 
      * the total number of clusters reaches n.
      * @param n 
@@ -225,14 +235,38 @@ public class Graph {
             return;
         }
         int clusterNum = this.getNumOfNodes();
+        int edgeNum = this.getNumOfEdges();
         int counter = 0;
         Edge e;
         while (clusterNum > n){
+            if (counter >= edgeNum){
+                System.out.println("No more edges! Setting spacing to zero.");
+                this._spacing = 0;
+                return;
+            }
+            System.out.println("Merging on edge #" + counter);
             e = this.getEdge(counter);
             this.getClusters().union(e.firstEnd(), e.secondEnd());
             clusterNum = this.getNumOfClusters();
             counter++;
         }
+//        System.out.println("Number of clusters: " + clusterNum);
+//        System.out.println("Establishing the spacing...");
+//        System.out.println("Available edge number: " + counter);
+        while(!this.isCut(this.getEdge(counter))){
+//            System.out.println("Edge #" + counter + " is not cut. Passing to the next");
+            counter++;
+            if (counter >= edgeNum){
+                this._spacing = 0;
+            }
+        }
+        if (counter < edgeNum){
+            this._spacing = this.getEdge(counter).cost();
+        } else {
+            this._spacing = 0;
+        }
+        
+        
     
     }
     
