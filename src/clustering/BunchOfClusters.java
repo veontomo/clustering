@@ -82,8 +82,10 @@ public class BunchOfClusters {
      */
     public int union(int n1, int  n2)
     {
+        System.out.print("Joining " + n1 + " and " + n2);
         Integer l1 = this.find(n1),
             l2 = this.find(n2);
+        System.out.print(" Their parents: " + l1 + " and " + l2);
         if (l1 == null || l2 == null){
             throw new IllegalArgumentException("Element(s) is not found! Can not unify!");
         }
@@ -104,6 +106,7 @@ public class BunchOfClusters {
             leader = l2;
             this._clusters.remove(l1);
         }
+        System.out.println(" -> " + leader);
         this._size--;
         return leader;
     }
@@ -126,7 +129,7 @@ public class BunchOfClusters {
     {
         String res = "";
         for (Integer n : this._clusters.keySet()) {
-            res += this.getClusterByLeader(n).info() + "\n";
+            res += this.getClusterByLeader(n).toString() + "\n";
         }
         return res;
 

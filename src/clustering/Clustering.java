@@ -62,10 +62,10 @@ public class Clustering {
             }
         }
         System.out.println("Graph is loaded with " + g.getNumOfNodes() + " nodes and " + + g.getNumOfEdges() + " edges.");
-        System.out.println(g.toString());
-        g.clusterify(10);
-        
-        System.out.println("Clusterized:\n" + g.getClusters().info());
+//        System.out.println(g.toString());
+        g.clusterify(200);
+        System.out.println("#clusters = " + g.getNumOfClusters());
+//        System.out.println("Clusterized:\n" + g.getClusters().info());
         System.out.println("spacing: " + g.getSpacing());
 //        System.out.println("Ordering graph");
 //        g.dfsOrder();

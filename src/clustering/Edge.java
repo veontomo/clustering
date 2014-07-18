@@ -138,7 +138,7 @@ public class Edge implements Comparable<Edge>{
     
     public String toString()
     {
-        return "[(" + this._end1 + ", " + this._end2 + "): " + this._cost + "]";
+        return "" + this._end1 + "-" + this._end2 + ": " + this._cost;
     }
 
 }

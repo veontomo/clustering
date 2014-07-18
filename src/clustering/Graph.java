@@ -175,10 +175,10 @@ public class Graph {
     public String toString()
     {
         String output = "";
-        int i = 0, period = 40;
+        int i = 0, period = 20;
         for(Edge e : this._edges){
             output += e.toString() + " ";
-            if (i % 40 == 0){
+            if (i % period == 0){
                 i = 0;
                 output += "\n";
             }
@@ -250,6 +250,7 @@ public class Graph {
         }
         int clusterNum = this.getNumOfNodes();
         int edgeNum = this.getNumOfEdges();
+//        int edgeNum = 5;
         int counter = 0;
         Edge e;
         while (clusterNum > n){
