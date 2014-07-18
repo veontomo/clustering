@@ -58,6 +58,9 @@ public class Cluster {
         }
         
         if (this.contains(n)){
+            System.out.println("Cluster ");
+            System.out.println(this._elems);
+            System.out.println("already contains element " + n);
             throw new IllegalArgumentException("Element is already present!");
         }
         
@@ -134,6 +137,20 @@ public class Cluster {
         return true;
     }
     
+    public String toString()
+    {
+        String res = String.valueOf(this.getLeader()) + ": ";
+        for (int n : this._elems){
+            res += String.valueOf(n) + " ";
+        }
+        return res;
+    }
+    
+    public String info()
+    {
+        return "leader: " + this.getLeader() + ", size: " + this.size();
+    }
     
     
 }
+

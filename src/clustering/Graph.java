@@ -6,6 +6,9 @@
 
 package clustering;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -172,10 +175,21 @@ public class Graph {
     public String toString()
     {
         String output = "";
+        int i = 0, period = 40;
         for(Edge e : this._edges){
             output += e.toString() + " ";
+            if (i % 40 == 0){
+                i = 0;
+                output += "\n";
+            }
+            i++;
         }
         return output;
+    }
+    
+    public String showClusters()
+    {
+        return this.getClusters().info();
     }
     
     /**
@@ -244,7 +258,7 @@ public class Graph {
                 this._spacing = 0;
                 return;
             }
-            System.out.println("Merging on edge #" + counter);
+//            System.out.println("Merging on edge #" + counter);
             e = this.getEdge(counter);
             this.getClusters().union(e.firstEnd(), e.secondEnd());
             clusterNum = this.getNumOfClusters();
@@ -270,8 +284,65 @@ public class Graph {
     
     }
     
-    public static void main(String[] args)
-    {
+       public static void main(String[] args) {
+        // TODO code application logic here
+        System.out.println("loading graph");
+        BufferedReader br = null;
+        Graph g = new Graph();
+        String fileName = "c:\\Users\\Andrea\\Documents\\courses\\algo2\\homework2\\clustering1.txt";
+        try {
+            Integer counter = 0;
+            Integer first, second, cost;
+            String sCurrentLine;
+            String[] data;
+            Edge e;
+            br = new BufferedReader(new FileReader(fileName));
+            sCurrentLine = br.readLine();
+            while ((sCurrentLine = br.readLine()) != null) {
+                counter++;
+                data = sCurrentLine.trim().split(" ");
+                if (data.length != 3){
+                    throw new IllegalArgumentException("Line must contain exactly three numbers!");
+                }
+                first = Integer.parseInt(data[0]);
+                second = Integer.parseInt(data[1]);
+                cost = Integer.parseInt(data[2]);
+                e = new Edge(first, second, cost);
+                g.addEdge(e);
+//                if (counter % 10000 == 0){
+//                    System.out.println("" + counter + ": " + g.maxNodeNum() );
+//                }
+                
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        System.out.println("Graph is loaded with " + g.getNumOfNodes() + " nodes and " + + g.getNumOfEdges() + " edges.");
+//        System.out.println(g.toString());
+        g.clusterify(10);
+        
+        System.out.println("Clusterized:\n" + g.getClusters().info());
+        System.out.println("spacing: " + g.getSpacing());
+//        System.out.println("Ordering graph");
+//        g.dfsOrder();
+//        System.out.println("Graph is ordered");
+////        g.flushVisits();
+//        System.out.println("Fragmentizing graph");
+//        g.fragmentize();
+//        System.out.println("Fragmetizing is over");
+//        System.out.println(g.show());
+//        System.out.println(g.getLeaderInfo());
+//        System.out.println(g.show());
+        
+//        System.out.println(g.showAnswer());
     
     }
     

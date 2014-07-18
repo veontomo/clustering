@@ -87,15 +87,17 @@ public class BunchOfClusters {
         if (l1 == null || l2 == null){
             throw new IllegalArgumentException("Element(s) is not found! Can not unify!");
         }
-        if (l1 == l2){
+        if (l1.equals(l2)){
             return l1;
         }
         Cluster c1 = this.getClusterByLeader(l1);
         Cluster c2 = this.getClusterByLeader(l2);
-        int leader;
-        if (c1.size() > c2.size()){
+        int leader, 
+            s1 = c1.size(), 
+            s2 = c2.size();
+        if (s1 > s2){
             c1.join(c2);
-            leader =  l1;
+            leader = l1;
             this._clusters.remove(l2);
         } else {
             c2.join(c1);
@@ -118,6 +120,16 @@ public class BunchOfClusters {
         }
         this._clusters.put(leader, c);
         this._size++;
+    }
+    
+    public String info()
+    {
+        String res = "";
+        for (Integer n : this._clusters.keySet()) {
+            res += this.getClusterByLeader(n).info() + "\n";
+        }
+        return res;
+
     }
     
     /**
